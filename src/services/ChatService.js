@@ -10,7 +10,10 @@ const createChat = (chatData) => {
                 data: createdChat
             });
         } catch (error) {
-            reject(error);
+            reject({
+                status: 'ERR',
+                message: error.message
+            });
         }
     });
 };
@@ -32,7 +35,10 @@ const updateChat = (chatId, updateData) => {
             const updatedChat = await Chat.findByIdAndUpdate(chatId, updateData, { new: true });
             resolve(updatedChat);
         } catch (error) {
-            reject(error);
+            reject({
+                status: 'ERR',
+                message: error.message
+            });
         }
     });
 };
@@ -43,7 +49,10 @@ const deleteChat = (chatId) => {
             await Chat.findByIdAndDelete(chatId);
             resolve();
         } catch (error) {
-            reject(error);
+            reject({
+                status: 'ERR',
+                message: error.message
+            });
         }
     });
 };
@@ -51,10 +60,17 @@ const deleteChat = (chatId) => {
 const getUserChats = (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const userChats = await Chat.find({ members: userId });
-            resolve(userChats);
+            const userChats = await Chat.find({ members: userId }).populate({ path: 'members', options: { strictPopulate: false } });
+
+            resolve({
+                status: 'OK',
+                message: 'Chat created successfully',
+                data : userChats});
         } catch (error) {
-            reject(error);
+            reject({
+                status: 'ERR',
+                message: error.message
+            });
         }
     });
 };
@@ -72,7 +88,10 @@ const addMember = (chatId, userId) => {
             }
             resolve(chat);
         } catch (error) {
-            reject(error);
+            reject({
+                status: 'ERR',
+                message: error.message
+            });
         }
     });
 };
@@ -91,7 +110,10 @@ const removeMember = (chatId, userId) => {
             }
             resolve(chat);
         } catch (error) {
-            reject(error);
+            reject({
+                status: 'ERR',
+                message: error.message
+            });
         }
     });
 };
@@ -110,7 +132,10 @@ const updateMemberRole = (chatId, userId, role) => {
             }
             resolve(chat);
         } catch (error) {
-            reject(error);
+            reject({
+                status: 'ERR',
+                message: error.message
+            });
         }
     });
 };
@@ -143,7 +168,10 @@ const requestToJoinGroup = (chatId, userId) => {
                 userId: userId // Bao gồm ID của thành viên trong phản hồi
             });
         } catch (error) {
-            reject(error);
+            reject({
+                status: 'ERR',
+                message: error.message
+            });
         }
     });
 };
@@ -177,7 +205,10 @@ const approveJoinRequest = (chatId, userId, organizerId) => {
 
             resolve({ message: 'Join request approved successfully' });
         } catch (error) {
-            reject(error);
+            reject({
+                status: 'ERR',
+                message: error.message
+            });
         }
     });
 };

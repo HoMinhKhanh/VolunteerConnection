@@ -6,7 +6,7 @@ const createMessage = async (req, res) => {
         const message = await MessageService.createMessage(chatId, type, content, senderId);
         return res.status(201).json(message);
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res.status(500).json({ message : error });
     }
 };
 
@@ -16,7 +16,7 @@ const getMessageById = async (req, res) => {
         const message = await MessageService.getMessageById(messageId);
         return res.status(200).json(message);
     } catch (error) {
-        return res.status(404).json({ error: error.message });
+        return res.status(404).json({ message : error });
     }
 };
 
@@ -27,7 +27,7 @@ const updateMessage = async (req, res) => {
         const updatedMessage = await MessageService.updateMessage(messageId, content);
         return res.status(200).json(updatedMessage);
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res.status(500).json({ message : error });
     }
 };
 
@@ -37,7 +37,7 @@ const deleteMessage = async (req, res) => {
         await MessageService.deleteMessage(messageId);
         return res.status(204).send();
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res.status(500).json({ message : error });
     }
 };
 
@@ -47,7 +47,7 @@ const revokeMessage = async (req, res) => {
         const result = await MessageService.revokeMessage(messageId);
         return res.status(200).json(result);
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res.status(500).json({ message : error });
     }
 };
 
@@ -57,7 +57,7 @@ const revokeMessageForUser = async (req, res) => {
         const result = await MessageService.revokeMessageForUser(messageId, userId);
         return res.status(200).json(result);
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res.status(500).json({ message : error });
     }
 };
 
